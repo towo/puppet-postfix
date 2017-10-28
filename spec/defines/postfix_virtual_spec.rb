@@ -98,8 +98,12 @@ describe 'postfix::virtual' do
           :incl    => '/etc/postfix/virtual',
           :lens    => 'Postfix_Virtual.lns',
           :changes => [
-            "set pattern[. = 'foo'] 'foo'",
-            "set pattern[. = 'foo']/destination 'bar'",
+            "rm pattern[. = 'foo']/destination[.]
+set pattern[. = 'foo'] 'foo'
+        
+                
+    set pattern[. = 'foo']/destination[001] 'bar'
+    ",
           ])
         }
       end
@@ -116,8 +120,12 @@ describe 'postfix::virtual' do
           :incl    => '/tmp/virtual',
           :lens    => 'Postfix_Virtual.lns',
           :changes => [
-            "set pattern[. = 'foo'] 'foo'",
-            "set pattern[. = 'foo']/destination 'bar'",
+            "rm pattern[. = 'foo']/destination[.]
+set pattern[. = 'foo'] 'foo'
+        
+                
+    set pattern[. = 'foo']/destination[001] 'bar'
+    ",
           ])
         }
       end

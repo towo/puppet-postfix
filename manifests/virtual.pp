@@ -41,13 +41,18 @@ define postfix::virtual (
 ) {
   include ::postfix::augeas
 
+  validate_string($destination)
+  validate_string($file)
+  validate_absolute_path($file)
+  validate_string($ensure)
+  # Make destination into an array so we 
+  # can iterate
+  $_destinations = split($destination, ',')
+  $destinations = strip($_destinations)
+
   case $ensure {
     'present': {
-      $changes = [
-        "set pattern[. = '${name}'] '${name}'",
-        # TODO: support more than one destination
-        "set pattern[. = '${name}']/destination '${destination}'",
-      ]
+      $changes = template('postfix/virtual.dest.erb')
     }
 
     'absent': {
